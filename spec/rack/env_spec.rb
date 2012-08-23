@@ -41,7 +41,7 @@ describe 'Rack::Env' do
 
     it "should ENV['FOO'] is nil" do
       get '/'
-      ENV['FOO'].should be_nil
+      expect(ENV['FOO']).to eq nil
     end
   end
 
@@ -53,7 +53,7 @@ describe 'Rack::Env' do
 
       it "should ENV['FOO'] == 'bar'" do
         get '/'
-        ENV['FOO'].should == "bar"
+        expect(ENV['FOO']).to eq "bar"
       end
     end
 
@@ -64,7 +64,7 @@ describe 'Rack::Env' do
 
       it "should ENV['BAZ'] == 'qux'" do
         get '/'
-        ENV['BAZ'].should == "qux"
+        expect(ENV['BAZ']).to eq "qux"
       end
     end
   end

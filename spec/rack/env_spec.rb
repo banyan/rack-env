@@ -7,7 +7,7 @@ describe 'Rack::Env' do
 
   before do
     # move current_dir as ./spec
-    Dir::chdir(File.dirname(File.dirname(__FILE__)))
+    Dir::chdir(File.dirname(File.dirname(__FILE__)) + '/tmp')
   end
 
   after(:all) do

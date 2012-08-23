@@ -1,6 +1,6 @@
-# Rack::Env
+# rack-env
 
-TODO: Write a gem description
+Sets .env variables
 
 ## Installation
 

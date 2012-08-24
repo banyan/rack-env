@@ -52,7 +52,7 @@ end
 ```
 # config.ru
 Rack::Builder.new
-  use Rack::Env, envfile: 'config/.env' if ENV['RACK_ENV'] == 'development'
+  use Rack::Env, envfile: '.env.development' if ENV['RACK_ENV'] == 'development'
   run MyApplication.new
 end
 ```

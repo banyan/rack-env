@@ -4,7 +4,6 @@ require "rack/env/version"
 
 module Rack
   class Env
-
     def initialize(app, options = {})
       @app     = app
       @options = options

@@ -1,37 +1,39 @@
 require File.dirname(File.dirname(__FILE__)) + '/spec_helper'
 
-current_dir = Dir.getwd
+CURRENT_DIR = Dir.getwd
+
+def without_rack_env_app
+  Rack::Builder.new do
+    run TestRackApp.new
+  end
+end
+
+def rack_env_app
+  Rack::Builder.new do
+    use Rack::Env
+    run TestRackApp.new
+  end
+end
+
+def rack_env_app_with_argument
+  Rack::Builder.new do
+    use Rack::Env, envfile: ".envfile"
+    run TestRackApp.new
+  end
+end
 
 describe 'Rack::Env' do
   include Rack::Test::Methods
 
+  let(:request) { get '/' }
+
   before do
-    # move current_dir as ./spec
+    # move current_dir to ./spec/tmp as root_dir
     Dir::chdir(File.dirname(File.dirname(__FILE__)) + '/tmp')
   end
 
   after(:all) do
-    Dir::chdir(current_dir)
-  end
-
-  def without_rack_env_app
-    Rack::Builder.new do
-      run TestRackApp.new
-    end
-  end
-
-  def rack_env_app
-    Rack::Builder.new do
-      use Rack::Env
-      run TestRackApp.new
-    end
-  end
-
-  def rack_env_app_with_argument
-    Rack::Builder.new do
-      use Rack::Env, envfile: ".envfile"
-      run TestRackApp.new
-    end
+    Dir::chdir(CURRENT_DIR)
   end
 
   context "When not using Rack::Env" do
@@ -39,32 +41,44 @@ describe 'Rack::Env' do
       without_rack_env_app
     end
 
-    it "should ENV['FOO'] is nil" do
-      get '/'
+    it "should not load environment variable" do
+      request
       expect(ENV['FOO']).to eq nil
     end
   end
 
   context "When using Rack::Env" do
-    context "without argument" do
+    context "default envfile" do
       def app
         rack_env_app
       end
 
-      it "should ENV['FOO'] == 'bar'" do
-        get '/'
-        expect(ENV['FOO']).to eq "bar"
+      it "should ignore empty line and commented out line" do
+        expect{
+          request
+        }.to change{ ENV.size }.by(2)
+      end
+
+      it "should load environment variable" do
+        request
+        expect(ENV['JAPAN']).to eq "Tokyo"
       end
     end
 
-    context "with argument" do
+    context "specified envfile" do
       def app
         rack_env_app_with_argument
       end
 
-      it "should ENV['BAZ'] == 'qux'" do
-        get '/'
-        expect(ENV['BAZ']).to eq "qux"
+      it "should ignore empty line and commented out line" do
+        expect{
+          request
+        }.to change{ ENV.size }.by(2)
+      end
+
+      it "should load environment variable" do
+        request
+        expect(ENV['INDIA']).to eq "Delhi"
       end
     end
   end

@@ -2,12 +2,11 @@
 [![Build Status](https://secure.travis-ci.org/banyan/rack-env.png)](http://travis-ci.org/banyan/rack-env)
 [<img src="https://gemnasium.com/banyan/rack-env.png" />](https://gemnasium.com/banyan/rack-env)
 
-Sets .env variables (`ENV['KEY']` pattern).
+Load environment variables from .env or specified file.
 
 Some of the PaaS (such as [Heroku](http://www.heroku.com/) and [Sqale](http://sqale.jp)) are using configuration with .env.
 
 This gem helps you while you are in development mode.
-
 
 ## Installation
 
@@ -25,10 +24,6 @@ Or install it yourself as:
 
 ## Usage
 
-```
-require 'rack/env'
-```
-
 ### Rails
 
 ```
@@ -37,24 +32,28 @@ group :development, :test do
 end
 ```
 
-### Rack
+### Rack App (such as sinatra)
 
 ```
-# config.ru
-Rack::Builder.new
-  use Rack::Env if ENV['RACK_ENV'] == 'development'
-  run MyApplication.new
-end
+# app.rb
+require 'rack/env'
+use Rack::Env
 ```
 
-* Enable to change .env path like as below.
+* Enable to specified file to load.
 
 ```
-# config.ru
-Rack::Builder.new
-  use Rack::Env, envfile: 'somewhere/to/.env.development' if ENV['RACK_ENV'] == 'development'
-  run MyApplication.new
-end
+# app.rb
+require 'rack/env'
+use Rack::Env, envfile: 'somewhere/to/.env.development'
+```
+
+* Use only local development
+
+```
+# app.rb
+require 'rack/env'
+use Rack::Env if ENV['RACK_ENV'] != 'production'
 ```
 
 ## Contributing
@@ -64,3 +63,8 @@ end
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+## Copyright
+
+Copyright (c) 2012 Kohei Hasegawa. See LICENSE for details.

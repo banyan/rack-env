@@ -1,0 +1,4 @@
+source :rubygems
+
+gem 'sinatra'
+gem 'rack-env', path: "/Users/banyan/git/rack-env"

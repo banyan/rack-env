@@ -4,8 +4,8 @@ require File.expand_path('../lib/rack/env/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Kohei Hasegawa"]
   gem.email         = ["ameutau@gmail.com"]
-  gem.description   = %q{Set .env valirables}
-  gem.summary       = %q{Set .env valirables}
+  gem.description   = %q{load environment variables from .env or specified file.}
+  gem.summary       = %q{load environment variables from .env or specified file.}
   gem.homepage      = "http://github.com/banyan/rack-env"
 
   gem.files         = `git ls-files`.split($\)

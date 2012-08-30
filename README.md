@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ### Rails
 
-```
+```ruby
 group :development, :test do
   gem 'rack-env'
 end
@@ -34,7 +34,7 @@ end
 
 ### Rack App (such as sinatra)
 
-```
+```ruby
 # app.rb
 require 'rack/env'
 use Rack::Env
@@ -42,7 +42,7 @@ use Rack::Env
 
 * Enable to specified file to load.
 
-```
+```ruby
 # app.rb
 require 'rack/env'
 use Rack::Env, envfile: 'somewhere/to/.env.development'
@@ -50,7 +50,7 @@ use Rack::Env, envfile: 'somewhere/to/.env.development'
 
 * Use only local development
 
-```
+```ruby
 # app.rb
 require 'rack/env'
 use Rack::Env unless ENV['RACK_ENV'] == 'production'

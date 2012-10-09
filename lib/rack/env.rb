@@ -30,8 +30,8 @@ module Rack
     def read_env_file(envfile)
       ::File.readlines(envfile).each {|line|
         next if line.chomp == "" || line =~ /^#/
-        key, value = line.chomp.split('=')
-        ENV[key] = value
+        parts = line.chomp.split('=')
+        ENV[parts[0]] = parts[1..-1].join('=')
       } if ::File.exist?(envfile)
     end
   end

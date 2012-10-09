@@ -56,12 +56,17 @@ describe 'Rack::Env' do
       it "should ignore empty line and commented out line" do
         expect{
           request
-        }.to change{ ENV.size }.by(2)
+        }.to change{ ENV.size }.by(3)
       end
 
       it "should load environment variable" do
         request
         expect(ENV['JAPAN']).to eq "Tokyo"
+      end
+
+      it "should load environment variable with '=' inside" do
+        request
+        expect(ENV['SECRET_HASH']).to eq "123$@zzz?a=/b"
       end
     end
 
